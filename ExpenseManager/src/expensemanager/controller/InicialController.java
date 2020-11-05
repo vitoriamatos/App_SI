@@ -115,6 +115,8 @@ public class InicialController implements Initializable {
         custoFixo.setText("$"+decimal.format(calcularCustoFixo()));
         custoVariaveis.setText("$"+decimal.format(calcularCustoVariavel()));
         precoVenda.setText("$"+ decimal.format(Double.parseDouble(precoProduto.getText())));
+        loadDataResult(Double.parseDouble(precoProduto.getText()));
+        initColResult();
 
 
 
@@ -129,8 +131,7 @@ public class InicialController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadData();
-        loadDataResult();
-        initColResult();
+
     }    
 
     public void initTable(){
@@ -209,8 +210,8 @@ public class InicialController implements Initializable {
     }
 
 
-    private void loadDataResult(){
-        double preco = 100;
+    private void loadDataResult(double preco){
+
         ObservableList<AnaliseVariables> data_table_faixa = FXCollections.observableArrayList();
         ObservableList<Values> data_table_v1 = FXCollections.observableArrayList();
         ObservableList<Values> data_table_v2 = FXCollections.observableArrayList();
