@@ -5,6 +5,7 @@
  */
 package expensemanager.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
@@ -25,6 +26,8 @@ import javafx.scene.text.Text;
 
 
 public class InicialController implements Initializable {
+
+    private final Utils utils = new Utils();
 
     private String[] listFixed = {"Terreno","Instalações", "Maquinária de Produção", "Equipamentos de escritório", "Água, energia, etc", "Seguro", "Total"};
     private String[] valueFixed = {"$42500.00", "$332500.00", "$532000.00","$212800.00","$30500.00","$99700.00", "$1250000.00"};
@@ -107,18 +110,26 @@ public class InicialController implements Initializable {
     private TableColumn<AnaliseVariables, AnaliseVariables> table_v6;
 
     @FXML
+    private Label alert;
+
+    @FXML
     void calcule(ActionEvent event) {
-        DecimalFormat decimal = new DecimalFormat( "0.00" );
-        resultPane.setVisible(true);
-        pontoEquilibrio.setText(String.valueOf(pontodeEquilibrio()));
-        margemContribuicao.setText("$"+ decimal.format(margemContribuicao()));
-        custoFixo.setText("$"+decimal.format(calcularCustoFixo()));
-        custoVariaveis.setText("$"+decimal.format(calcularCustoVariavel()));
-        precoVenda.setText("$"+ decimal.format(Double.parseDouble(precoProduto.getText())));
-        loadDataResult(Double.parseDouble(precoProduto.getText()));
-        initColResult();
 
+        if(precoProduto.getText().toString()== "" || precoProduto.getText().isEmpty()){
+            alert.setVisible(true);
+        }else {
+            alert.setVisible(false);
+            DecimalFormat decimal = new DecimalFormat("0.00");
+            resultPane.setVisible(true);
+            pontoEquilibrio.setText(String.valueOf(pontodeEquilibrio()));
+            margemContribuicao.setText("$" + decimal.format(margemContribuicao()));
+            custoFixo.setText("$" + decimal.format(calcularCustoFixo()));
+            custoVariaveis.setText("$" + decimal.format(calcularCustoVariavel()));
+            precoVenda.setText("$" + decimal.format(Double.parseDouble(precoProduto.getText())));
+            loadDataResult(Double.parseDouble(precoProduto.getText()));
+            initColResult();
 
+        }
 
 
     }
@@ -132,7 +143,24 @@ public class InicialController implements Initializable {
         initTable();
         loadData();
 
-    }    
+    }
+
+
+    @FXML
+    void maximize(ActionEvent event) {
+        utils.maximize(event);
+    }
+
+    @FXML
+    void minimize(ActionEvent event) {
+        utils.minimize(event);
+    }
+
+    @FXML
+    void close() throws IOException {
+        utils.close();
+    }
+
 
     public void initTable(){
     initCol();
@@ -169,7 +197,7 @@ public class InicialController implements Initializable {
             e.getTableView().getItems().get(e.getTablePosition().getRow()).setValor(e.getNewValue());
         });
 
-        tableFixa.setEditable(true);
+
 
         categoriaVariavel.setCellFactory(TextFieldTableCell.forTableColumn());
         categoriaVariavel.setOnEditCommit(e->{
