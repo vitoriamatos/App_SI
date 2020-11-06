@@ -8,10 +8,14 @@ package expensemanager.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import expensemanager.entities.AnaliseVariables;
 import expensemanager.entities.Values;
+
+import expensemanager.utils.CurrencyField;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +26,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Pane;
 import expensemanager.utils.Utils;
-import javafx.scene.text.Text;
 
 
 public class InicialController implements Initializable {
@@ -111,6 +114,11 @@ public class InicialController implements Initializable {
 
     @FXML
     private Label alert;
+
+    @FXML
+    private void inputField() {
+
+    }
 
     @FXML
     void calcule(ActionEvent event) {
@@ -312,6 +320,10 @@ public class InicialController implements Initializable {
 
         return Math.ceil(margem);
     }
+
+
+
+
 
 
 }
